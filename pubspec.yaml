@@ -10,13 +10,17 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.2.2
-<<<<<<< HEAD
   image_picker: ^1.1.2
   supabase_flutter: ^2.8.0
-=======
-  shared_preferences: ^2.3.2
-  image_picker: ^1.1.2
->>>>>>> 355c55f9fd903c0da6ba3a40fad0d4eb49765624
+  share_plus: ^11.0.0
+
+dev_dependencies:
+  flutter_launcher_icons: ^0.14.4
 
 flutter:
   uses-material-design: true
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/app_icon.png"

@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/task.dart';
 import '../services/review_service.dart';
-<<<<<<< HEAD
 import '../config.dart';
-=======
-import '../services/storage_service.dart';
->>>>>>> 355c55f9fd903c0da6ba3a40fad0d4eb49765624
 import '../theme.dart';
+import '../widgets/fun.dart';
 
 class ProofScreen extends StatefulWidget {
   final Task task;
@@ -18,7 +15,8 @@ class ProofScreen extends StatefulWidget {
 }
 
 class _ProofScreenState extends State<ProofScreen> {
-  static const hints = {'Write-up': 'Describe exactly what you did and the result...', 'Link': 'https://...', 'Commit': 'Commit hash + what changed', 'Screenshot': 'Optional: what the screenshot shows'};
+  static const icons = {'Write-up': '✍️', 'Link': '🔗', 'Commit': '💻', 'Screenshot': '📸'};
+  static const hints = {'Write-up': 'Describe exactly what you did and the result...', 'Link': 'https://...', 'Commit': 'github.com/you/repo/commit/abc1234', 'Screenshot': 'Optional: what the screenshot shows'};
   String type = 'Write-up';
   final c = TextEditingController();
   Uint8List? img;
@@ -34,11 +32,7 @@ class _ProofScreenState extends State<ProofScreen> {
 
   Future<void> go() async {
     setState(() => busy = true);
-<<<<<<< HEAD
     final v = await review(widget.task, type, c.text, img);
-=======
-    final v = await review(store.apiKey, widget.task, type, c.text, img);
->>>>>>> 355c55f9fd903c0da6ba3a40fad0d4eb49765624
     if (mounted) Navigator.pop(context, v);
   }
 
@@ -46,17 +40,13 @@ class _ProofScreenState extends State<ProofScreen> {
   Widget build(BuildContext context) {
     final ready = type == 'Screenshot' ? img != null : c.text.trim().isNotEmpty;
     return Scaffold(
-      appBar: AppBar(title: const Text('Submit proof')),
+      appBar: AppBar(title: const Text('Submit proof 🧾')),
       body: ListView(padding: const EdgeInsets.all(20), children: [
         Text(widget.task.title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
         const SizedBox(height: 4),
-<<<<<<< HEAD
-        Text(Config.hasGemini ? 'Our AI judge will review this. Be convincing.' : 'AI is not set up yet, so simple offline checks will review this.', style: TextStyle(color: ink.withValues(alpha: .6))),
-=======
-        Text(store.apiKey.isEmpty ? 'Reviewed by offline checks. Add an API key in Settings for AI review.' : 'Claude will review this.', style: TextStyle(color: ink.withValues(alpha: .6))),
->>>>>>> 355c55f9fd903c0da6ba3a40fad0d4eb49765624
+        Text(Config.hasGemini ? '🧑‍⚖️ Our AI judge will review this. Be convincing 😏' : '🤖 AI is not set up yet, so simple offline checks will review this.', style: TextStyle(color: ink.withValues(alpha: .6))),
         const SizedBox(height: 18),
-        Wrap(spacing: 8, children: [for (final t in hints.keys) ChoiceChip(label: Text(t), selected: type == t, onSelected: (_) => setState(() => type = t))]),
+        Wrap(spacing: 8, children: [for (final t in hints.keys) ChoiceChip(label: Text('${icons[t]} $t'), selected: type == t, onSelected: (_) => setState(() => type = t))]),
         const SizedBox(height: 16),
         if (type == 'Screenshot') ...[
           OutlinedButton.icon(onPressed: pick, icon: const Icon(Icons.image_outlined), label: Text(img == null ? 'Choose screenshot' : 'Change screenshot')),
@@ -65,11 +55,8 @@ class _ProofScreenState extends State<ProofScreen> {
         ],
         TextField(controller: c, minLines: type == 'Write-up' ? 5 : 2, maxLines: 8, onChanged: (_) => setState(() {}), decoration: fieldStyle(hints[type]!)),
         const SizedBox(height: 20),
-        FilledButton(
-          onPressed: ready && !busy ? go : null,
-          style: bigButton(),
-          child: busy ? const SizedBox(height: 22, width: 22, child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white)) : const Text('Verify it'),
-        ),
+        FunButton(label: 'Verify it 🔍', onTap: ready && !busy ? go : null, busy: busy, color: sun),
+        if (busy) const JudgingBubble(),
       ]),
     );
   }
