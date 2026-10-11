@@ -10,8 +10,13 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.2.2
+<<<<<<< HEAD
   image_picker: ^1.1.2
   supabase_flutter: ^2.8.0
+=======
+  shared_preferences: ^2.3.2
+  image_picker: ^1.1.2
+>>>>>>> 355c55f9fd903c0da6ba3a40fad0d4eb49765624
 
 flutter:
   uses-material-design: true

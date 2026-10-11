@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/task.dart';
 import '../services/review_service.dart';
+<<<<<<< HEAD
 import '../config.dart';
+=======
+import '../services/storage_service.dart';
+>>>>>>> 355c55f9fd903c0da6ba3a40fad0d4eb49765624
 import '../theme.dart';
 
 class ProofScreen extends StatefulWidget {
@@ -30,7 +34,11 @@ class _ProofScreenState extends State<ProofScreen> {
 
   Future<void> go() async {
     setState(() => busy = true);
+<<<<<<< HEAD
     final v = await review(widget.task, type, c.text, img);
+=======
+    final v = await review(store.apiKey, widget.task, type, c.text, img);
+>>>>>>> 355c55f9fd903c0da6ba3a40fad0d4eb49765624
     if (mounted) Navigator.pop(context, v);
   }
 
@@ -42,7 +50,11 @@ class _ProofScreenState extends State<ProofScreen> {
       body: ListView(padding: const EdgeInsets.all(20), children: [
         Text(widget.task.title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
         const SizedBox(height: 4),
+<<<<<<< HEAD
         Text(Config.hasGemini ? 'Our AI judge will review this. Be convincing.' : 'AI is not set up yet, so simple offline checks will review this.', style: TextStyle(color: ink.withValues(alpha: .6))),
+=======
+        Text(store.apiKey.isEmpty ? 'Reviewed by offline checks. Add an API key in Settings for AI review.' : 'Claude will review this.', style: TextStyle(color: ink.withValues(alpha: .6))),
+>>>>>>> 355c55f9fd903c0da6ba3a40fad0d4eb49765624
         const SizedBox(height: 18),
         Wrap(spacing: 8, children: [for (final t in hints.keys) ChoiceChip(label: Text(t), selected: type == t, onSelected: (_) => setState(() => type = t))]),
         const SizedBox(height: 16),
