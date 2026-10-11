@@ -1,0 +1,17 @@
+name: receipts
+description: A task manager that won't let you close a task without proof.
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.2
+  shared_preferences: ^2.3.2
+  image_picker: ^1.1.2
+
+flutter:
+  uses-material-design: true
